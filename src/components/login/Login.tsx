@@ -1,10 +1,20 @@
 // import { Button } from '@mantine/core';
-import { ChevronRight } from '@mui/icons-material';
-import { Button, Input, TextField } from '@mui/material';
+import { ChevronRight, Visibility, VisibilityOff } from '@mui/icons-material';
+import { Button, IconButton, Input, InputAdornment, TextField } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
+import React from 'react';
 export default function Login() {
-    return (
+
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [password, setPassword] = React.useState('');
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    function teste() {
+        console.log(password)
+    }
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();}
+        return (
         <div>
         <div className='flex items-center justify-center pb-3 mt-[20vh]' >
             <Image src={image} alt={'Imagem'} width={300} height={300}/>
@@ -15,13 +25,26 @@ export default function Login() {
                 <form action="" method="post"
                 autoComplete="off">
                     <div>
-                        <TextField  required id="standard-required" label="Digite o cpf" variant="standard" className='  text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' />
+                        <Input  required id="standard-required" placeholder="Digite o cpf" className='  text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' />
                     </div>
                     <div>
-                        <TextField id="standard-password-input" label="Digite a senha" type="password" autoComplete="current-password" variant="standard" required  className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' />
+                        <Input id="standard-password-input" 
+                            value={password} 
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    >
+                                    {showPassword ? <Visibility /> : <VisibilityOff />  }
+                                    </IconButton>
+                                </InputAdornment>
+                            } 
+                            type={showPassword ? 'text' : 'password'} placeholder="Digite a senha"  autoComplete="current-password" required  className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' />
                     </div>
                     <div>
-                        <Button variant="outlined"  endIcon={<ChevronRight />}  className='rounded-md p-[10px] w-[100%] border-1 border-black text-gray-950'>Entrar</Button>
+                        <Button variant="outlined" onClick={() => { teste() }} endIcon={<ChevronRight />}  className='rounded-md p-[10px] w-[100%] border-1 border-black text-gray-950'>Entrar</Button>
                     </div>
                 </form>
             </section>
