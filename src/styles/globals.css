@@ -2,26 +2,58 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  @apply
+  bg-slate-900
+}
+label,h1,h2,h3,h4,h5 {
+  @apply
+  text-black
+}
+/* Parte da tela de login */
+.buttonLogin{
+  @apply
+  rounded-md
+  p-[10px]
+  text-black
+  text-white
+  bg-slate-300
+  w-[100%]
+}
+.sectionLogin{
+  @apply
+  bg-white
+  p-4
+  rounded-md
+}
+.spanBottom {
+  @apply
+  text-black
+  font-bold
+}
+.textLogin {
+  @apply
+  flex
+  justify-center
+  mb-4
+  text-[24px]
+}
+.formLogin {
+  @apply
+  rounded-md
+  flex
+  items-center
+  h-screen
+  justify-center
+  bg-black
+}
+.input{
+  @apply
+  text-black
+  w-[100%]
+  p-[10px]
+  mb-[10px]
+  bg-slate-300
+  rounded-sm
 }
