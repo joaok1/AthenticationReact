@@ -21,10 +21,9 @@ export default function Login() {
 
     const getloginUser = () =>  {
         const user = {
-            login: login,
+            login: sendFormattedCPF(login),
             senha: password
         }
-        user.login = sendFormattedCPF(user.login)
         console.log(user)
         logar(user)
     }
