@@ -1,9 +1,10 @@
 // import { Button } from '@mantine/core';
 import { ChevronRight, Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, IconButton, Input, InputAdornment, TextField } from '@mui/material';
+import { Button, IconButton, Input, InputAdornment } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
 import InputMask from 'react-input-mask';
+import { IMaskInput } from 'react-imask';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
@@ -16,7 +17,7 @@ export default function Login() {
     const navigate = useRouter();
     const API_URL = 'http://localhost:1080/api/usuarios/auth';
     const API_URL_VERIFY = 'http://localhost:1080/api/usuarios/validatorUser';
-    const history = History; 
+    // const history = History; 
     const TOKEN_COOKIE_KEY : string = 'token';
     const USER_COOKIE_KEY: string  = 'user';
     const DADOS_USUARIO : string = 'dados_usuario';
@@ -31,9 +32,16 @@ export default function Login() {
             login: login,
             senha: password
         }
+        user.login = sendFormattedCPF(user.login)
         console.log(user)
         setLogin(user)
     }
+
+    function sendFormattedCPF(dados: string) {
+        const cpfWithoutFormat = dados.replace(/[^\d]/g, "");
+        let login = ''
+        return (login = cpfWithoutFormat);
+      }
 
     const setLogin = async (credentials : any) => {
         try {
@@ -74,9 +82,9 @@ export default function Login() {
                 <form action="" method="post"
                 autoComplete="off">
                     <div>
-                        <InputMask required id="standard-required" placeholder="Digite o cpf" 
+                        <IMaskInput required id="standard-required" placeholder="Digite o cpf" 
                             onChange={e => setUser(e.target.value)}
-                            mask="###.###.###-##"
+                            mask='000.000.000-00'
                             className='
                             text-gray-950 
                             w-[100%] 
