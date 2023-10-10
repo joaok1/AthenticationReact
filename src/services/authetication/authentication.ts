@@ -7,20 +7,17 @@ import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import Login from '@/components/login/Login';
 
-const navigate = useRouter();
 const API_URL = 'http://localhost:1080/api/usuarios/auth';
 const API_URL_VERIFY = 'http://localhost:1080/api/usuarios/validatorUser';
-const history = History; 
 const TOKEN_COOKIE_KEY : string = 'token';
 const USER_COOKIE_KEY: string  = 'user';
 const DADOS_USUARIO : string = 'dados_usuario';
+// const [authenticated, setAuthenticated] = useState(false);
 
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check for authentication status when the component mounts
-    restoreAuthentication();
-  }, []);
+  // useEffect(() => {
+  //   // Check for authentication status when the component mounts
+  //   restoreAuthentication();
+  // }, []);
 
 //   const showLoading = () => {
 //     const loadingInstance = Loading.service({
@@ -68,13 +65,13 @@ const DADOS_USUARIO : string = 'dados_usuario';
     }
 
     if (token && user) {
-      setAuthenticated(true);
+      // setAuthenticated(true);
     }
   };
 
   const clearAuthentication = () => {
     removeAllCookies();
-    setAuthenticated(false);
+    // setAuthenticated(false);
   };
 
   export const setLogin = async (credentials : any) => {
@@ -85,12 +82,13 @@ const DADOS_USUARIO : string = 'dados_usuario';
 
         Cookies.set(TOKEN_COOKIE_KEY, token, { expires: 1, secure: true });
         Cookies.set(USER_COOKIE_KEY, JSON.stringify(user), { expires: 1, secure: true });
-        setAuthenticated(true);
+        // setAuthenticated(true);
         const getUserCookie: string  = Cookies.get('user') ?? '';
         const userCookie = JSON.parse(getUserCookie);
         const usuario = userCookie.sub;
         Cookies.set(DADOS_USUARIO, usuario, { expires: 1, secure: true });
-        navigate.push('/')
+        return true
+        // navigate.push('/')
     // //   showLoading();
     //   setTimeout(() => {
     //     // hideLoading();
@@ -104,12 +102,12 @@ const DADOS_USUARIO : string = 'dados_usuario';
     }
   };
 
-  const logout = () => {
-    removeAllCookies();
-    // Replace with your routing logic (React Router, for example)
-    navigate.push('/login');
-    clearAuthentication();
-  };
+  // const logout = () => {
+  //   removeAllCookies();
+  //   // Replace with your routing logic (React Router, for example)
+  //   navigate.push('/login');
+  //   clearAuthentication();
+  // };
 
   const verifyUserExpired = async () => {
     const response = await axios.get(`${API_URL_VERIFY}/${Cookies.get(TOKEN_COOKIE_KEY)}`);

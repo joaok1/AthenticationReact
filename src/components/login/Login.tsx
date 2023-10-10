@@ -3,9 +3,9 @@ import { ChevronRight } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
-import InputMask from 'react-input-mask';
 import { IMaskInput } from 'react-imask';
 import React, { useState } from 'react';
+import { setLogin } from '@/services/authetication/authentication';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
@@ -16,12 +16,6 @@ import Input from 'react-imask/esm/input';
 export default function Login() {
 
     const navigate = useRouter();
-    const API_URL = 'http://localhost:1080/api/usuarios/auth';
-    const API_URL_VERIFY = 'http://localhost:1080/api/usuarios/validatorUser';
-    const TOKEN_COOKIE_KEY : string = 'token';
-    const USER_COOKIE_KEY: string  = 'user';
-    const DADOS_USUARIO : string = 'dados_usuario';
-    const [authenticated, setAuthenticated] = useState(false);
     const [password, setPassword] = React.useState('');
     const [login, setUser] = React.useState('');
 
@@ -32,7 +26,7 @@ export default function Login() {
         }
         user.login = sendFormattedCPF(user.login)
         console.log(user)
-        setLogin(user)
+        logar(user)
     }
 
     function sendFormattedCPF(dados: string) {
@@ -41,19 +35,12 @@ export default function Login() {
         return (login = cpfWithoutFormat);
       }
 
-    const setLogin = async (credentials : any) => {
+    const logar = async (credentials : any) => {
         try {
-            const response = await axios.post(API_URL, credentials);
-            const token = response.data.token;
-            const user = jwtDecode(token);
-            Cookies.set(TOKEN_COOKIE_KEY, token, { expires: 1, secure: true });
-            Cookies.set(USER_COOKIE_KEY, JSON.stringify(user), { expires: 1, secure: true });
-            setAuthenticated(true);
-            const getUserCookie: string  = Cookies.get('user') ?? '';
-            const userCookie = JSON.parse(getUserCookie);
-            const usuario = userCookie.sub;
-            Cookies.set(DADOS_USUARIO, usuario, { expires: 1, secure: true });
-            navigate.push('/')
+            const data = await setLogin(credentials)
+            if (data) {
+                navigate.push('/')
+            }
         // //   showLoading();
         //   setTimeout(() => {
         //     // hideLoading();
@@ -62,7 +49,7 @@ export default function Login() {
         //     // history.push('/Despesas');
         //   }, 2000);
         } catch (error) {
-          console.error(error);
+          console.error('Não foi possivel logar: ' + error);
         }
       };
 
@@ -92,8 +79,8 @@ export default function Login() {
                         <Input id="standard-password-input" 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            placeholder="Digite a senha" 
-                            autoComplete="current-password" 
+                            placeholder="Digite a senha"
+                            type='password'
                             required 
                             className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
                         />
