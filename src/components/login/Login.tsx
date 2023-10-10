@@ -4,15 +4,11 @@ import { Button } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
 import { IMaskInput } from 'react-imask';
-import React, { useState } from 'react';
+import React from 'react';
 import { setLogin } from '@/services/authetication/authentication';
-import axios from 'axios';
-import jwtDecode from 'jwt-decode';
 import { useRouter } from 'next/router';
-import Cookies from 'js-cookie';
 import Input from 'react-imask/esm/input';
 
-// import {setLogin} from "@/services/authetication/authentication"
 export default function Login() {
 
     const navigate = useRouter();
@@ -40,56 +36,49 @@ export default function Login() {
             if (data) {
                 navigate.push('/')
             }
-        // //   showLoading();
-        //   setTimeout(() => {
-        //     // hideLoading();
-        //     // messageSuccess();
-        //     // Replace with your routing logic (React Router, for example)
-        //     // history.push('/Despesas');
-        //   }, 2000);
         } catch (error) {
           console.error('Não foi possivel logar: ' + error);
         }
       };
 
-        return (
+    return (
         <div>
-        <div className='flex items-center justify-center pb-3 mt-[20vh]' >
-            <Image src={image} alt={'Imagem'} width={300} height={300}/>
-        </div>
-        <div className= "rounded-md flex items-center  justify-center bg-black">
-            <section className="bg-white p-4 rounded-md w-[300px]">
-                <span className="flex justify-center mb-4 text-[24px] text-gray-950">Bem vindo</span>
-                <form action="" method="post"
-                autoComplete="off">
-                    <div>
-                        <IMaskInput required id="standard-required" placeholder="Digite o cpf" 
-                            onChange={e => setUser(e.target.value)}
-                            mask='000.000.000-00'
-                            className='
-                            text-gray-950 
-                            w-[100%] 
-                            p-[10px] 
-                            mb-[10px] 
-                            rounded-sm'
-                        />
-                    </div>
-                    <div>
-                        <Input id="standard-password-input" 
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            placeholder="Digite a senha"
-                            type='password'
-                            required 
-                            className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
-                        />
-                    </div>
-                    <div>
-                        <Button variant="outlined" onClick={() => { getloginUser() }}   endIcon={<ChevronRight />}  className='rounded-md p-[10px] w-[100%] border-1 border-black text-gray-950'>Entrar</Button>
-                    </div>
-                </form>
-            </section>
-        </div>
+            <div className='flex items-center justify-center pb-3 mt-[20vh]' >
+                <Image src={image} alt={'Imagem'} width={300} height={300}/>
+            </div>
+            <div className= "rounded-md flex items-center  justify-center bg-black">
+                <section className="bg-white p-4 rounded-md w-[300px]">
+                    <span className="flex justify-center mb-4 text-[24px] text-gray-950">Bem vindo</span>
+                    <form action="" method="post"
+                    autoComplete="off">
+                        <div>
+                            <IMaskInput required id="standard-required" placeholder="Digite o cpf" 
+                                onChange={e => setUser(e.target.value)}
+                                mask='000.000.000-00'
+                                className='
+                                text-gray-950 
+                                w-[100%] 
+                                p-[10px] 
+                                mb-[10px] 
+                                rounded-sm'
+                            />
+                        </div>
+                        <div>
+                            <Input id="standard-password-input" 
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                                placeholder="Digite a senha"
+                                type='password'
+                                required 
+                                className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
+                            />
+                        </div>
+                        <div>
+                            <Button variant="outlined" onClick={() => { getloginUser() }}   endIcon={<ChevronRight />}  className='rounded-md p-[10px] w-[100%] border-1 border-black text-gray-950'>Entrar</Button>
+                        </div>
+                    </form>
+                </section>
+            </div>
         </div>
     )
 }

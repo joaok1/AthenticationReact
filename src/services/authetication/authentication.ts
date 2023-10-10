@@ -75,7 +75,6 @@ const DADOS_USUARIO : string = 'dados_usuario';
   };
 
   export const setLogin = async (credentials : any) => {
-    try {
         const response = await axios.post(API_URL, credentials);
         const token = response.data.token;
         const user = jwtDecode(token);
@@ -96,10 +95,7 @@ const DADOS_USUARIO : string = 'dados_usuario';
     //     // Replace with your routing logic (React Router, for example)
     //     // history.push('/Despesas');
     //   }, 2000);
-    } catch (error) {
-      messageError();
-      console.error(error);
-    }
+   
   };
 
   // const logout = () => {
