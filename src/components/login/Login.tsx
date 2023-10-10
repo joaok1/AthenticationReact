@@ -1,32 +1,29 @@
 // import { Button } from '@mantine/core';
-import { ChevronRight, Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, IconButton, InputAdornment } from '@mui/material';
+import { ChevronRight } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
 import InputMask from 'react-input-mask';
 import { IMaskInput } from 'react-imask';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
-import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import Input from 'react-imask/esm/input';
+
 // import {setLogin} from "@/services/authetication/authentication"
 export default function Login() {
 
     const navigate = useRouter();
     const API_URL = 'http://localhost:1080/api/usuarios/auth';
     const API_URL_VERIFY = 'http://localhost:1080/api/usuarios/validatorUser';
-    // const history = History; 
     const TOKEN_COOKIE_KEY : string = 'token';
     const USER_COOKIE_KEY: string  = 'user';
     const DADOS_USUARIO : string = 'dados_usuario';
     const [authenticated, setAuthenticated] = useState(false);
-    const [showPassword, setShowPassword] = React.useState(false);
     const [password, setPassword] = React.useState('');
     const [login, setUser] = React.useState('');
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const getloginUser = () =>  {
         const user = {
@@ -49,7 +46,6 @@ export default function Login() {
             const response = await axios.post(API_URL, credentials);
             const token = response.data.token;
             const user = jwtDecode(token);
-    
             Cookies.set(TOKEN_COOKIE_KEY, token, { expires: 1, secure: true });
             Cookies.set(USER_COOKIE_KEY, JSON.stringify(user), { expires: 1, secure: true });
             setAuthenticated(true);
@@ -69,9 +65,7 @@ export default function Login() {
           console.error(error);
         }
       };
-    
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();}
+
         return (
         <div>
         <div className='flex items-center justify-center pb-3 mt-[20vh]' >
@@ -98,7 +92,10 @@ export default function Login() {
                         <Input id="standard-password-input" 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            type={showPassword ? 'text' : 'password'} placeholder="Digite a senha"  autoComplete="current-password" required  className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
+                            placeholder="Digite a senha" 
+                            autoComplete="current-password" 
+                            required 
+                            className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
                         />
                     </div>
                     <div>
