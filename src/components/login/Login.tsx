@@ -1,6 +1,6 @@
 // import { Button } from '@mantine/core';
 import { ChevronRight, Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, IconButton, Input, InputAdornment } from '@mui/material';
+import { Button, IconButton, InputAdornment } from '@mui/material';
 import image from '@/assets/logo.png';
 import Image from "next/image";
 import InputMask from 'react-input-mask';
@@ -11,6 +11,7 @@ import jwtDecode from 'jwt-decode';
 import { useNavigate } from 'react-router-dom';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
+import Input from 'react-imask/esm/input';
 // import {setLogin} from "@/services/authetication/authentication"
 export default function Login() {
 
@@ -97,17 +98,6 @@ export default function Login() {
                         <Input id="standard-password-input" 
                             value={password}
                             onChange={e => setPassword(e.target.value)}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                    aria-label="toggle password visibility"
-                                    onClick={handleClickShowPassword}
-                                    onMouseDown={handleMouseDownPassword}
-                                    >
-                                    {showPassword ? <Visibility /> : <VisibilityOff />  }
-                                    </IconButton>
-                                </InputAdornment>
-                            } 
                             type={showPassword ? 'text' : 'password'} placeholder="Digite a senha"  autoComplete="current-password" required  className='text-gray-950 w-[100%] p-[10px] mb-[10px] rounded-sm' 
                         />
                     </div>
